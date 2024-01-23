@@ -12,18 +12,35 @@
     align-items: center;
     height: 100vh;
     flex-direction: column;
+    background-color: #f7f7f7;
   }
 
   .card {
     font-size: 3em;
     margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
   }
 
   .button {
     padding: 10px 20px;
-    font-size: 1em;
+    font-size: 1.5em;
     margin: 10px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+  }
+
+  .check {
+    background-color: #4CAF50; /* Green */
+    color: white;
+  }
+
+  .wrong {
+    background-color: #F44336; /* Red */
+    color: white;
   }
 
   #results {
@@ -33,19 +50,20 @@
 </head>
 <body>
 
+<button class="button check" onclick="markWord(true)">✓</button>
 <div id="flashcard" class="card">Word will appear here</div>
-<button class="button" onclick="markWord(true)">✓</button>
-<button class="button" onclick="markWord(false)">✗</button>
+<button class="button wrong" onclick="markWord(false)">✗</button>
 
 <div id="results">
   <h2>Results:</h2>
-  <p>Correct: <span id="correct"></span></p>
-  <p>Incorrect: <span id="incorrect"></span></p>
+  <p>Correct Answers: <span id="correct-count"></span></p>
+  <p>Incorrect Answers: <span id="incorrect-count"></span></p>
+  <p>Percentage Right: <span id="percentage"></span>%</p>
 </div>
 
 <script>
 // The words to learn
-const words = ["The", "of", "and", "a", "to", "in", "is", "you", "that", "it", "he", "was", "for", "on", "are", "as", "with", "his", "they", "I", "at", "be", "this", "have", "from", "or", "one", "had", "by", "words", "but", "not", "what", "all", "were", "we", "when", "your", "can", "said"];
+const words = ["the", "of", "and", "a", "to", "in", "is", "you", "that", "it", "he", "was", "for", "on", "are", "as", "with", "his", "they", "I", "at", "be", "this", "have", "from", "or", "one", "had", "by", "words", "but", "not", "what", "all", "were", "we", "when", "your", "can", "said"];
 let currentWordIndex = 0;
 let correctWords = [];
 let incorrectWords = [];
@@ -71,11 +89,17 @@ function markWord(isCorrect) {
 }
 
 function endGame() {
+  const correctCount = correctWords.length;
+  const incorrectCount = incorrectWords.length;
+  const totalCount = words.length;
+  const percentageRight = (correctCount / totalCount) * 100;
+
   document.getElementById('flashcard').style.display = 'none';
   document.querySelectorAll('.button').forEach(button => button.style.display = 'none');
   
-  document.getElementById('correct').textContent = correctWords.join(', ');
-  document.getElementById('incorrect').textContent = incorrectWords.join(', ');
+  document.getElementById('correct-count').textContent = correctCount;
+  document.getElementById('incorrect-count').textContent = incorrectCount;
+  document.getElementById('percentage').textContent = percentageRight.toFixed(2);
   document.getElementById('results').style.display = 'block';
 }
 
