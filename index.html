@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcard Game</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  .card {
+    font-size: 3em;
+    margin: 20px;
+  }
+
+  .button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  #results {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="flashcard" class="card">Word will appear here</div>
+<button class="button" onclick="markWord(true)">✓</button>
+<button class="button" onclick="markWord(false)">✗</button>
+
+<div id="results">
+  <h2>Results:</h2>
+  <p>Correct: <span id="correct"></span></p>
+  <p>Incorrect: <span id="incorrect"></span></p>
+</div>
+
+<script>
+// The words to learn
+const words = ["The", "of", "and", "a", "to", "in", "is", "you", "that", "it", "he", "was", "for", "on", "are", "as", "with", "his", "they", "I", "at", "be", "this", "have", "from", "or", "one", "had", "by", "words", "but", "not", "what", "all", "were", "we", "when", "your", "can", "said"];
+let currentWordIndex = 0;
+let correctWords = [];
+let incorrectWords = [];
+
+function displayWord() {
+  document.getElementById('flashcard').textContent = words[currentWordIndex];
+}
+
+function markWord(isCorrect) {
+  if (isCorrect) {
+    correctWords.push(words[currentWordIndex]);
+  } else {
+    incorrectWords.push(words[currentWordIndex]);
+  }
+  
+  currentWordIndex++;
+  
+  if (currentWordIndex < words.length) {
+    displayWord();
+  } else {
+    endGame();
+  }
+}
+
+function endGame() {
+  document.getElementById('flashcard').style.display = 'none';
+  document.querySelectorAll('.button').forEach(button => button.style.display = 'none');
+  
+  document.getElementById('correct').textContent = correctWords.join(', ');
+  document.getElementById('incorrect').textContent = incorrectWords.join(', ');
+  document.getElementById('results').style.display = 'block';
+}
+
+// Start the game
+displayWord();
+</script>
+
+</body>
+</html>
