@@ -53,30 +53,37 @@
     text-align: center;
   }
 
-  .abeezee-regular {
-    font-family: "ABeeZee", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  .abeezee-italic {
-    font-family: "ABeeZee", sans-serif;
-    font-weight: 400;
-    font-style: italic;
+  .results-list {
+    text-align: left;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 20px;
   }
 </style>
 </head>
 <body>
 
-<button class="button check abeezee-regular" onclick="markWord(true)">✓</button>
-<div id="flashcard" class="card abeezee-regular">Word will appear here</div>
-<button class="button wrong abeezee-regular" onclick="markWord(false)">✗</button>
+<button class="button check" onclick="markWord(true)">✓</button>
+<div id="flashcard" class="card">Word will appear here</div>
+<button class="button wrong" onclick="markWord(false)">✗</button>
 
-<div id="results" class="abeezee-regular">
+<div id="results">
   <h2>Results:</h2>
   <p>Correct Answers: <span id="correct-count"></span></p>
   <p>Incorrect Answers: <span id="incorrect-count"></span></p>
   <p>Percentage Right: <span id="percentage"></span>%</p>
+  
+  <div>
+    <h3>Correct Words:</h3>
+    <div id="correct-words" class="results-list"></div>
+  </div>
+  
+  <div>
+    <h3>Incorrect Words:</h3>
+    <div id="incorrect-words" class="results-list"></div>
+  </div>
 </div>
 
 <script>
@@ -118,6 +125,10 @@ function endGame() {
   document.getElementById('correct-count').textContent = correctCount;
   document.getElementById('incorrect-count').textContent = incorrectCount;
   document.getElementById('percentage').textContent = percentageRight.toFixed(2);
+
+  document.getElementById('correct-words').textContent = correctWords.join(', ');
+  document.getElementById('incorrect-words').textContent = incorrectWords.join(', ');
+
   document.getElementById('results').style.display = 'block';
 }
 
