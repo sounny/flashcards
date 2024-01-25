@@ -61,9 +61,29 @@
     padding: 10px;
     margin-top: 20px;
   }
+
+  #add-word-form {
+    margin-bottom: 20px;
+  }
+  
+  #new-word-input {
+    font-size: 1em;
+    padding: 5px;
+    margin-right: 5px;
+  }
+  
+  #add-word-button {
+    font-size: 1em;
+    padding: 5px;
+  }
 </style>
 </head>
 <body>
+
+<div id="add-word-form">
+  <input type="text" id="new-word-input" placeholder="Add a new word" />
+  <button id="add-word-button" onclick="addWord()">Add Word</button>
+</div>
 
 <button class="button check" onclick="markWord(true)">✓</button>
 <div id="flashcard" class="card">Word will appear here</div>
@@ -87,8 +107,10 @@
 </div>
 
 <script>
+
+  
 // The words to learn
-const words = ["the","these","use","an","each","which","she","do","how","their", "if", "of", "and", "a", "to", "in", "is", "you", "that", "it", "he", "was", "for", "on", "are", "as", "with", "his", "they", "I", "at", "be", "this", "have", "from", "or", "one", "had", "by", "words", "but", "not", "what", "all", "were", "we", "when", "your", "can", "said"];
+let words = ["the","these","use","an","each","which","she","do","how","their", "if", "of", "and", "a", "to", "in", "is", "you", "that", "it", "he", "was", "for", "on", "are", "as", "with", "his", "they", "I", "at", "be", "this", "have", "from", "or", "one", "had", "by", "words", "but", "not", "what", "all", "were", "we", "when", "your", "can", "said"];
 let currentWordIndex = 0;
 let correctWords = [];
 let incorrectWords = [];
@@ -112,6 +134,22 @@ function markWord(isCorrect) {
     endGame();
   }
 }
+
+function addWord() {
+  const newWordInput = document.getElementById('new-word-input');
+  const newWord = newWordInput.value.trim().toLowerCase();
+  
+  if (newWord && !words.includes(newWord)) {
+    words.push(newWord);
+    newWordInput.value = ''; // Clear the input after adding the word
+    newWordInput.focus(); // Keep focus on input for adding another word
+  } else if (words.includes(newWord)) {
+    alert('Word already exists in the word bank!');
+  } else {
+    alert('Please enter a word to add.');
+  }
+}
+
 
 function endGame() {
   const correctCount = correctWords.length;
